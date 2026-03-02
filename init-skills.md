@@ -61,48 +61,7 @@ Cada dev usa el agente de su preferencia; todos comparten los mismos skills.
 
 ---
 
-### Paso 4 — Agregar bloque de referencia al archivo de agente del proyecto
-
-Una vez instalados los archivos de agente, agregar al final del archivo principal
-del agente que está usando el dev (ej: CLAUDE.md del proyecto) el siguiente bloque,
-reemplazando `[NOMBRE-PROYECTO]` con el nombre real:
-
-```
-## Sistema de Skills
-Los skills, bugs, features y comandos de este proyecto están en:
-
-  ~/skills/[NOMBRE-PROYECTO]/
-
-Antes de ejecutar cualquier comando, resolver bugs, implementar features
-o modificar código, lee los archivos correspondientes desde esa ruta:
-
-  - ~/skills/[NOMBRE-PROYECTO]/GLOBAL_RULES.md   ← léelo SIEMPRE primero
-  - ~/skills/[NOMBRE-PROYECTO]/commands/          ← comandos disponibles
-  - ~/skills/[NOMBRE-PROYECTO]/components/        ← skills de componentes
-  - ~/skills/[NOMBRE-PROYECTO]/bugs/              ← specs de bugs
-  - ~/skills/[NOMBRE-PROYECTO]/features/          ← specs de features
-
-Para crear bugs usa ~/skills/[NOMBRE-PROYECTO]/bugs/BUGFIX-SPEC-TEMPLATE.md como base.
-Para crear features usa ~/skills/[NOMBRE-PROYECTO]/features/FEATURE-SPEC-TEMPLATE.md como base.
-Para crear skills guárdalos en ~/skills/[NOMBRE-PROYECTO]/components/
-
-## Capas de implementación (Atomic Design)
-Todo desarrollo nuevo sigue este orden estricto:
-
-  Layer 1 → Átomos       (componentes base, sin lógica, sin store)
-  Layer 2 → Moléculas    (composición de átomos, estado local permitido)
-  Layer 3 → Organismos   (secciones completas, datos por props)
-  Layer 4 → Lógica       (hooks, adapters, store slices, servicios)
-  Layer 5 → Integración  (montar en el árbol, conectar store, routing)
-
-No avanzar al siguiente layer sin verificar los criterios del actual.
-
-Nunca guardes skills, bugs ni features dentro de este repositorio.
-```
-
----
-
-### Paso 5 — Confirmar
+### Paso 4 — Confirmar
 Muestra un resumen de todo lo que creaste y modificaste:
 
 ```
@@ -129,8 +88,6 @@ Muestra un resumen de todo lo que creaste y modificaste:
     ✓ AGENTS.md          (OpenAI Codex CLI)
     ✓ .cursorrules       (Cursor)
     ✓ .github/copilot-instructions.md  (GitHub Copilot)
-
-  Bloque de referencia agregado al archivo de agente del proyecto.
 
   Comandos disponibles (por agente):
     Claude Code  →  /bugfix [ID]  /create-feature  /feature [ID]

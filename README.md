@@ -72,8 +72,12 @@ El agente va a leer `~/skills/init-skills.md` y ejecutar el flujo completo:
 1. Crear la carpeta `~/skills/[nombre-proyecto]/` con su estructura
 2. Copiar y configurar los archivos base desde `_base/`
 3. Instalar los archivos de configuración de agente en la raíz del proyecto
-4. Agregar al `CLAUDE.md` (u otro archivo de agente) del proyecto el siguiente
-   bloque de referencia al sistema de skills:
+
+### Paso manual post-init — Agregar bloque de referencia al proyecto
+
+Una vez que el agente termine el init, agregá manualmente el siguiente bloque
+al archivo de configuración de agente del proyecto (`CLAUDE.md`, `AGENTS.md`, etc.)
+reemplazando `[nombre-proyecto]` con el nombre real:
 
 ```
 ## Sistema de Skills
