@@ -1,0 +1,134 @@
+# Cursor Rules
+
+## Reglas para modificación de código
+
+### Reutilización de componentes y métodos
+Antes de modificar cualquier componente, método, hook, servicio o utility,
+verifica cuántos lugares del proyecto lo están usando.
+
+- Si está siendo usado en más de un lugar, NO lo modifiques directamente.
+  Aplica los siguientes principios:
+
+  **Single Responsibility Principle (SRP)**
+  Cada componente, hook o función debe tener una única razón para cambiar.
+  Si el cambio que necesitas afecta un comportamiento que otros usan,
+  es una señal de que esa responsabilidad debe extraerse a una nueva unidad
+  independiente con su propio propósito específico.
+
+  **Open/Closed Principle (OCP)**
+  El código existente debe estar abierto para extensión pero cerrado para modificación.
+  En lugar de modificar el original, extiéndelo o crea una versión nueva
+  que cubra el caso específico que necesitas sin alterar el comportamiento actual.
+
+  **Liskov Substitution Principle (LSP)**
+  Una versión extendida o especializada de un componente debe poder usarse
+  en lugar del original sin romper el comportamiento esperado.
+  Si tu variante necesita cambiar la interfaz o los contratos del original,
+  no es una extensión válida — es un componente nuevo con otra responsabilidad.
+
+  **Interface Segregation Principle (ISP)**
+  No fuerces a un componente o hook a depender de props, métodos o contratos
+  que no usa. Si una interfaz está creciendo para satisfacer múltiples casos,
+  sepárala en interfaces más pequeñas y específicas por consumidor.
+
+  **Dependency Inversion Principle (DIP)**
+  Los módulos de alto nivel no deben depender de implementaciones concretas.
+  Depende de abstracciones: props, callbacks, contextos o contratos de interfaz.
+  Inyecta las dependencias desde afuera en lugar de instanciarlas internamente.
+
+- Nunca asumas que un cambio es "seguro" porque parece pequeño.
+- Esto aplica para: componentes, hooks, servicios, utils, actions de Redux,
+  selectores, helpers y cualquier función compartida.
+
+## Sistema de Skills
+Los skills de componentes, bugs, features y comandos de este proyecto
+NO están en este repositorio. Están en una carpeta local en:
+
+~/skills/[NOMBRE-PROYECTO]/
+
+Estructura:
+  ~/skills/[NOMBRE-PROYECTO]/components/   ← skills de componentes
+  ~/skills/[NOMBRE-PROYECTO]/bugs/         ← specs de bugs
+  ~/skills/[NOMBRE-PROYECTO]/features/     ← specs de features
+  ~/skills/[NOMBRE-PROYECTO]/commands/     ← comandos del agente
+
+Antes de ejecutar cualquier tarea, resolver un bug o implementar una feature,
+lee los archivos correspondientes desde esa ruta.
+
+## Generación de nuevos skills
+Cuando se te pida crear el skill de un componente, el archivo
+debe guardarse SIEMPRE en:
+
+  ~/skills/[NOMBRE-PROYECTO]/components/[Componente].md
+
+Nunca dentro del repositorio del proyecto.
+
+## Generación de nuevos bugs
+Cuando se te pida crear un bug, el archivo debe guardarse SIEMPRE en:
+
+  ~/skills/[NOMBRE-PROYECTO]/bugs/[ID].md
+
+Lee la carpeta ~/skills/[NOMBRE-PROYECTO]/bugs/ para asignar
+el ID en secuencia antes de crear el archivo.
+Usa ~/skills/[NOMBRE-PROYECTO]/bugs/BUGFIX-SPEC-TEMPLATE.md como base para el spec.
+
+Nunca dentro del repositorio del proyecto.
+
+## Sistema de Features (desarrollos nuevos)
+Los features se gestionan con estos comandos:
+
+  @create-feature  → parsea una historia de Jira y genera el spec
+  @feature [ID]    → implementa el feature capa por capa
+
+Los specs de features se guardan SIEMPRE en:
+
+  ~/skills/[NOMBRE-PROYECTO]/features/[ID].md
+
+El ID se asigna en secuencia leyendo esa carpeta antes de crear el archivo.
+Usa ~/skills/[NOMBRE-PROYECTO]/features/FEATURE-SPEC-TEMPLATE.md como base.
+
+Nunca dentro del repositorio del proyecto.
+
+Antes de ejecutar @create-feature o @feature, leer el comando correspondiente desde:
+
+  ~/skills/[NOMBRE-PROYECTO]/commands/create-feature.md
+  ~/skills/[NOMBRE-PROYECTO]/commands/feature.md
+
+Antes de ejecutar @bugfix, leer el comando desde:
+
+  ~/skills/[NOMBRE-PROYECTO]/commands/bugfix.md
+
+## Capas de implementación (Atomic Design)
+Todo desarrollo nuevo sigue este orden estricto de construcción:
+
+  Layer 1 → Átomos       (componentes base, sin lógica, sin store)
+  Layer 2 → Moléculas    (composición de átomos, estado local permitido)
+  Layer 3 → Organismos   (secciones completas, datos por props)
+  Layer 4 → Lógica       (hooks, adapters, store slices, servicios)
+  Layer 5 → Integración  (montar en el árbol, conectar store, routing)
+
+No se avanza al siguiente layer sin verificar los criterios del actual.
+La lógica (Layer 4) siempre va DESPUÉS de tener la estructura visual verificada.
+
+## Dependencias entre features
+Un feature puede consumir contratos de salida de otro feature (§3 del spec).
+Antes de implementar un feature, verificar que sus dependencias estén en estado
+`completed`. Si no lo están, abortar e indicar qué feature debe implementarse primero.
+
+## Actualización de skills existentes
+Cuando resuelvas un bug o descubras comportamiento nuevo de un componente,
+actualiza el skill correspondiente en:
+~/skills/[NOMBRE-PROYECTO]/components/[Componente].md
+
+El skill debe reflejar:
+- El nuevo comportamiento o fix aplicado.
+- Cualquier parámetro, prop o contexto nuevo que se haya agregado.
+- Advertencias o edge cases descubiertos durante la investigación.
+- Si se creó una función wrapper o versión independiente, documéntala
+  en el skill del componente que la consume.
+
+Si el skill del componente no existe aún, créalo.
+Si ya existe, agrégale una sección ## Historial de cambios al final
+con la fecha, el ID del bug y un resumen de una línea del fix.
+
+Nunca actualices skills dentro del repositorio del proyecto.
